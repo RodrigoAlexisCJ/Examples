@@ -11,23 +11,17 @@ import static org.junit.jupiter.api.Assumptions.assumingThat;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.rest.example.model.User;
 import com.example.rest.example.model.UserRepository;
 
 @SpringBootTest
@@ -46,6 +40,10 @@ class RestExampleApplicationTests {
 //        ).
 //        collect(Collectors.toList()));
 //	}
+	@BeforeAll
+	public static void onInit() {
+		log.info("@BeforeAll - executed after all test methods.");
+	}
 	
 	@DisplayName("Single not empty repository test successful")
 	@Test
@@ -80,9 +78,9 @@ class RestExampleApplicationTests {
 	 void groupAssertions() {
 	     int[] numbers = {0, 1, 2, 3, 4};
 	     assertAll("numbers",
-	         () -> assertEquals(numbers[1], 1),
+	         () -> assertEquals(numbers[0], 1),
 	         () -> assertEquals(numbers[3], 3),
-	         () -> assertEquals(numbers[1], 1)
+	         () -> assertEquals(numbers[4], 1)
 	     );
 	 }
 	

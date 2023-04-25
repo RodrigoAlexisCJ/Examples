@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -50,5 +51,39 @@ public class MockitoTest {
 	    });
 	    assertEquals("Not supported", exception.getMessage());
 	}
+	
+	@Test
+	public void whenNotUseSpyAnnotation_thenCorrect() {
+	    List<String> spyList = Mockito.spy(new ArrayList<String>());
+	    
+	    spyList.add("one");
+	    spyList.add("two");
 
+	    Mockito.verify(spyList).add("one");
+	    Mockito.verify(spyList).add("two");
+
+	    assertEquals(2, spyList.size());
+
+	    Mockito.doReturn(100).when(spyList).size();
+	    assertEquals(100, spyList.size());
+	}
+	
+	@Spy
+	List<String> spiedList = new ArrayList<String>();
+
+	@Test
+	public void whenUseSpyAnnotation_thenSpyIsInjectedCorrectly() {
+	    spiedList.add("one");
+	    spiedList.add("two");
+
+	    Mockito.verify(spiedList).add("one");
+	    Mockito.verify(spiedList).add("two");
+
+	    assertEquals(2, spiedList.size());
+
+	    Mockito.doReturn(100).when(spiedList).size();
+	    assertEquals(100, spiedList.size());
+	}
+
+	
 }
